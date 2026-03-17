@@ -1,0 +1,14 @@
+model Lecture {
+  id          String   @id @default(uuid())
+  title       String
+  order_index Int
+  video_url   String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @default(now())
+
+  module_id String
+  module    Module @relation(fields: [module_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([module_id])
+  @@map("lecture")
+}

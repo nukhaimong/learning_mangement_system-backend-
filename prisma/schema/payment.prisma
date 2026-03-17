@@ -1,0 +1,18 @@
+model Payment {
+  id                   String        @id @default(ulid())
+  payment_Status       PaymentStatus @default(UNPAID)
+  amount               Float
+  stripe_event_id      String        @unique
+  transaction_id       String        @unique
+  invoice_url          String
+  payment_gateway_data Json
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @default(now())
+
+  enrollment_id String     @unique
+  enrollment    Enrollment @relation(fields: [enrollment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([enrollment_id])
+  @@index([transaction_id])
+  @@map("payment")
+}

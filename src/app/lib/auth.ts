@@ -1,7 +1,8 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { prisma } from './prisma';
-import { Role, UserStatus } from '../../../generated/prisma/enums';
+import { Role, UserStatus } from '../../generated/prisma/enums';
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql', // or "mysql", "postgresql", ...etc
@@ -24,8 +25,8 @@ export const auth = betterAuth({
       },
       isDeleted: {
         type: 'boolean',
-        required: false,
-        defaultValue: null,
+        required: true,
+        defaultValue: false,
       },
       deletedAt: {
         type: 'date',

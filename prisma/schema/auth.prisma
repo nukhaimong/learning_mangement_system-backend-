@@ -1,17 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
-generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-}
-
-datasource db {
-  provider = "postgresql"
-}
-
 model User {
   id            String    @id
   name          String
@@ -25,8 +11,12 @@ model User {
 
   role      String    @default("Learner")
   status    String    @default("ACTIVE")
-  isDeleted Boolean?
+  isDeleted Boolean?  @default(false)
   deletedAt DateTime?
+
+  learner    Learner?
+  instructor Instructor?
+  admin      Admin?
 
   @@unique([email])
   @@map("user")
@@ -78,17 +68,4 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
-}
-
-enum Role {
-  Admin
-  Super_admin
-  Learner
-  Instructor
-}
-
-enum UserStatus {
-  ACTIVE
-  BLOCKED
-  DELETED
 }
