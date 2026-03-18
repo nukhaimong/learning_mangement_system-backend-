@@ -20,7 +20,7 @@ model Course {
   reviews     Reviews[]
   modules     Module[]
   enrollments Enrollment[]
-  favourites  Favourites[]
+  favourites  Favorites[]
 
   @@index([instructor_id])
   @@map("course")

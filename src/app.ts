@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import { globalErrorHandler } from './app/middleware/globalErrorHanlder';
 import { notFound } from './app/middleware/notFound';

@@ -15,7 +15,7 @@ model Learner {
 
   reviews     Reviews[]
   enrollments Enrollment[]
-  favourites  Favourites[]
+  favourites  Favorites[]
 
   @@index([email])
   @@map("learner")

@@ -1,7 +1,8 @@
-model Favourites {
+model Favorites {
   id        String   @id @default(ulid())
   createdAt DateTime @default(now())
-  deletedAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime?
 
   course_id String
   course    Course @relation(fields: [course_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -11,5 +12,6 @@ model Favourites {
 
   @@index([course_id])
   @@index([learner_id])
-  @@map("favourites")
+  @@unique([course_id, learner_id])
+  @@map("favorites")
 }
