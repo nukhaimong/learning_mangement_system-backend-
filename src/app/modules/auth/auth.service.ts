@@ -4,6 +4,7 @@ import { auth } from '../../lib/auth';
 import { ILoginPayload, IRegistrationPayload } from './auth.interface';
 import { Role, UserStatus } from '../../../generated/prisma/enums';
 import { prisma } from '../../lib/prisma';
+import { IRequestUser } from '../../interfaces/requestUser.interface';
 
 const registration = async (payload: IRegistrationPayload) => {
   const { name, email, password, role } = payload;
@@ -87,7 +88,138 @@ const login = async (payload: ILoginPayload) => {
   return data;
 };
 
+const isProfileExist = async (user: IRequestUser) => {
+  const isLearnerExist = await prisma.learner.findUnique({
+    where: {
+      user_id: user.id,
+    },
+  });
+  const isInstructorExist = await prisma.learner.findUnique({
+    where: {
+      user_id: user.id,
+    },
+  });
+  if (!isInstructorExist && !isLearnerExist) {
+    return false;
+  }
+  return true;
+};
+
+const updateRole = async (role: Role, user: IRequestUser) => {
+  if (
+    ![Role.Learner, Role.Instructor, Role.Admin, Role.Super_admin].includes(
+      role,
+    )
+  ) {
+    throw new AppError(status.BAD_REQUEST, 'Invalid role');
+  }
+
+  if (role === Role.Learner) {
+    return await prisma.learner.create({
+      data: {
+        name: user.name,
+        email: user.email,
+        user_id: user.id,
+      },
+    });
+  } else if (role === Role.Instructor) {
+    return await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          role,
+        },
+      });
+      const instructor = await prisma.instructor.create({
+        data: {
+          name: user.name,
+          email: user.email,
+          user_id: user.id,
+        },
+      });
+      return instructor;
+    });
+  }
+};
+
+const verifyEmail = async (email: string, otp: string) => {
+  const result = await auth.api.verifyEmailOTP({
+    body: {
+      email,
+      otp,
+    },
+  });
+  if (result.status && !result.user.emailVerified) {
+    await prisma.user.update({
+      where: { email },
+      data: {
+        emailVerified: true,
+      },
+    });
+  }
+};
+
+const forgotPassword = async (email: string) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (!isUserExist) {
+    throw new AppError(status.NOT_FOUND, 'User Not Found');
+  }
+  if (!isUserExist.emailVerified) {
+    throw new AppError(status.NOT_FOUND, 'User email is not varified');
+  }
+  if (isUserExist.isDeleted && isUserExist.status === UserStatus.DELETED) {
+    throw new AppError(status.NOT_FOUND, 'User Not Found');
+  }
+
+  await auth.api.requestPasswordResetEmailOTP({
+    body: {
+      email,
+    },
+  });
+};
+
+const resetPassword = async (
+  email: string,
+  otp: string,
+  newPassword: string,
+) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (!isUserExist) {
+    throw new AppError(status.NOT_FOUND, 'User Not Found');
+  }
+  if (!isUserExist.emailVerified) {
+    throw new AppError(status.NOT_FOUND, 'User email is not varified');
+  }
+  if (isUserExist.isDeleted && isUserExist.status === UserStatus.DELETED) {
+    throw new AppError(status.NOT_FOUND, 'User Not Found');
+  }
+
+  await auth.api.resetPasswordEmailOTP({
+    body: {
+      email,
+      otp,
+      password: newPassword,
+    },
+  });
+  await prisma.session.deleteMany({
+    where: {
+      userId: isUserExist.id,
+    },
+  });
+};
+
 export const AuthService = {
   registration,
   login,
+  updateRole,
+  isProfileExist,
+  verifyEmail,
+  forgotPassword,
+  resetPassword,
 };
