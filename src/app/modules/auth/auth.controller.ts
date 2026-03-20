@@ -105,7 +105,10 @@ const updateRole = catchAsync(async (req: Request, res: Response) => {
 
 const verifyEmail = catchAsync(async (req: Request, res: Response) => {
   const { email, otp } = req.body;
-  await AuthService.verifyEmail(email, otp);
+  const result = await AuthService.verifyEmail(email, otp);
+
+  tokenUtils.setBetterAuthSessionToken(res, result.token as string);
+
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,

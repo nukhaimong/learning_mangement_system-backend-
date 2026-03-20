@@ -35,7 +35,7 @@ const registration = async (payload: IRegistrationPayload) => {
     );
   }
   try {
-    const profile = await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx) => {
       if (data.user.role === Role.Learner) {
         const learner = await tx.learner.create({
           data: {
@@ -61,7 +61,7 @@ const registration = async (payload: IRegistrationPayload) => {
         );
       }
     });
-    return profile;
+    return data;
   } catch (error) {
     console.log('Failed To Create Learner/Instructor: ', error);
     await prisma.user.delete({
@@ -159,6 +159,7 @@ const verifyEmail = async (email: string, otp: string) => {
       },
     });
   }
+  return result;
 };
 
 const forgotPassword = async (email: string) => {
