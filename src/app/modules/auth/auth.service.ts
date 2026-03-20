@@ -5,6 +5,7 @@ import { ILoginPayload, IRegistrationPayload } from './auth.interface';
 import { Role, UserStatus } from '../../../generated/prisma/enums';
 import { prisma } from '../../lib/prisma';
 import { IRequestUser } from '../../interfaces/requestUser.interface';
+import { User } from '../../../generated/prisma/client';
 
 const registration = async (payload: IRegistrationPayload) => {
   const { name, email, password, role } = payload;
@@ -105,7 +106,7 @@ const isProfileExist = async (user: IRequestUser) => {
   return true;
 };
 
-const updateRole = async (role: Role, user: IRequestUser) => {
+const updateRole = async (role: Role, user: User) => {
   if (
     ![Role.Learner, Role.Instructor, Role.Admin, Role.Super_admin].includes(
       role,

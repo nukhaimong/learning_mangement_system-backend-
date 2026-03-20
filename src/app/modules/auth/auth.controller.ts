@@ -8,6 +8,7 @@ import { auth } from '../../lib/auth';
 import { IRequestUser } from '../../interfaces/requestUser.interface';
 import AppError from '../../errorHelpers/appError';
 import { tokenUtils } from '../../utils/token';
+import { User } from '../../../generated/prisma/client';
 
 const registration = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
@@ -62,9 +63,7 @@ const googleLoginSuccess = catchAsync(async (req: Request, res: Response) => {
     return res.redirect(`${envVars.FRONTEND_URL}/login?error=user_not_found`);
   }
 
-  const profilExist = await AuthService.isProfileExist(
-    session.user as IRequestUser,
-  );
+  const profilExist = await AuthService.isProfileExist(session.user as User);
 
   if (!profilExist) {
     res.redirect(`${envVars.FRONTEND_URL}/upgrade-role`);
@@ -91,10 +90,7 @@ const updateRole = catchAsync(async (req: Request, res: Response) => {
   if (!session) {
     throw new AppError(status.NOT_FOUND, 'Session not found');
   }
-  const result = await AuthService.updateRole(
-    role,
-    session.user as IRequestUser,
-  );
+  const result = await AuthService.updateRole(role, session.user as User);
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,
