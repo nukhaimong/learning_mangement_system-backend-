@@ -17,7 +17,7 @@ export const validateRequest = (zodSchema: z.ZodObject) => {
       return next(parsedRequstData.error);
     }
 
-    req.body = parsedRequstData;
+    req.body = parsedRequstData.data;
     next();
   };
 };
