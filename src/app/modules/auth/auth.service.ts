@@ -89,7 +89,7 @@ const login = async (payload: ILoginPayload) => {
   return data;
 };
 
-const isProfileExist = async (user: IRequestUser) => {
+const isProfileExist = async (user: User) => {
   const isLearnerExist = await prisma.learner.findUnique({
     where: {
       user_id: user.id,
