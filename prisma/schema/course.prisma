@@ -3,10 +3,11 @@ model Course {
   title       String
   description String
   thumbnail   String
+  intro_video String
   course_fee  Float
-  isFree      Boolean
+  isFree      Boolean   @default(false)
   level       Level
-  isPublished Boolean
+  isPublished Boolean   @default(false)
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now())
