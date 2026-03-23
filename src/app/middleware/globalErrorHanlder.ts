@@ -5,6 +5,7 @@ import { TErrorResponse, TErrorSources } from '../interfaces/errorInterface';
 import status from 'http-status';
 import z from 'zod';
 import { handlerZodError } from '../errorHelpers/zodErrors';
+import { deleteUploadedFilesFromGlobalErrorHanlder } from '../utils/deleteUploadedFiles';
 
 export const globalErrorHandler = async (
   err: any,
@@ -15,6 +16,8 @@ export const globalErrorHandler = async (
   if (envVars.NODE_ENV === 'development') {
     console.log('Error comming from global error handler: ', err);
   }
+
+  await deleteUploadedFilesFromGlobalErrorHanlder(req);
 
   let errorSources: TErrorSources[] = [];
   let statusCode: number = status.INTERNAL_SERVER_ERROR;
