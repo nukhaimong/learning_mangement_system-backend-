@@ -11,3 +11,14 @@ export interface ICreateCoursePayload {
   isPublished?: boolean;
   category_id: string;
 }
+export interface ICourseUpdatePayload {
+  title?: string;
+  description?: string;
+  thumbnail?: string;
+  intro_video?: string;
+  course_fee?: number;
+  isFree?: boolean;
+  level?: Level;
+  isPublished?: boolean;
+  category_id?: string;
+}
