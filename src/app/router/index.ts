@@ -8,6 +8,7 @@ import { LearnerRoutes } from '../modules/learner/learner.routes';
 import { InstructorRoutes } from '../modules/instructor/instructor.routes';
 import { ModuleRoutes } from '../modules/module/module.routes';
 import { LectureRoutes } from '../modules/lecture/lecture.routes';
+import { EnrollmentRoutes } from '../modules/enrollment/enrollment.routes';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/learner', LearnerRoutes);
 router.use('/instructor', InstructorRoutes);
 router.use('/module', ModuleRoutes);
 router.use('/lecture', LectureRoutes);
+router.use('/enrollment', EnrollmentRoutes);
 
 export const IndexRoutes = router;

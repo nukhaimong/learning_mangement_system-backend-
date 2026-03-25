@@ -15,7 +15,7 @@ router.get(
 );
 router.get(
   '/:learner_id',
-  checkAuth(Role.Admin, Role.Super_admin),
+  checkAuth(Role.Admin, Role.Super_admin, Role.Learner),
   LearnerController.getLearnerById,
 );
 router.put(

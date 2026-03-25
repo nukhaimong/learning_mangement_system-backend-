@@ -15,6 +15,32 @@ const getLearnerById = async (learner_id: string) => {
     where: {
       id: learner_id,
     },
+    include: {
+      enrollments: {
+        include: {
+          course: {
+            include: {
+              modules: {
+                include: {
+                  lectures: {
+                    select: {
+                      title: true,
+                      video_url: true,
+                    },
+                    orderBy: {
+                      order_index: 'asc',
+                    },
+                  },
+                },
+                orderBy: {
+                  order_index: 'asc',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 };
 

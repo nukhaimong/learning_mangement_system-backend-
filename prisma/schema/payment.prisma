@@ -1,10 +1,9 @@
 model Payment {
-  id                   String        @id @default(ulid())
+  id                   String        @id @default(uuid())
   payment_Status       PaymentStatus @default(UNPAID)
   amount               Float
   stripe_event_id      String        @unique
   transaction_id       String        @unique
-  invoice_url          String
   payment_gateway_data Json
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @default(now())
