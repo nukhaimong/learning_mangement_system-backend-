@@ -1,5 +1,5 @@
 model Enrollment {
-  id         String  @id @default(ulid())
+  id         String  @id @default(uuid())
   course_id  String
   course     Course  @relation(fields: [course_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   learner_id String

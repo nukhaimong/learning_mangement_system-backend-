@@ -48,6 +48,22 @@ const getCourseById = async (course_id: string) => {
           name: true,
         },
       },
+      modules: {
+        include: {
+          lectures: {
+            select: {
+              title: true,
+              order_index: true,
+            },
+            orderBy: {
+              order_index: 'asc',
+            },
+          },
+        },
+        orderBy: {
+          order_index: 'asc',
+        },
+      },
     },
   });
 };
