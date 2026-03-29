@@ -14,7 +14,7 @@ enum UserStatus {
 enum Level {
   Beginner
   Intermediate
-  Advance
+  Advanced
 }
 
 enum PaymentStatus {

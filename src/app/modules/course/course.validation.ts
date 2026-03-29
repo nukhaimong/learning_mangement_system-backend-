@@ -21,7 +21,7 @@ export const createCourseZodSchema = z.object({
 
   isFree: z.boolean().optional(),
 
-  level: z.enum([Level.Advance, Level.Intermediate, Level.Beginner]),
+  level: z.enum([Level.Advanced, Level.Intermediate, Level.Beginner]),
 
   isPublished: z.boolean().optional(),
 
@@ -51,7 +51,9 @@ export const updateCourseZodSchema = z.object({
 
   isFree: z.boolean().optional(),
 
-  level: z.enum([Level.Advance, Level.Intermediate, Level.Beginner]).optional(),
+  level: z
+    .enum([Level.Advanced, Level.Intermediate, Level.Beginner])
+    .optional(),
 
   isPublished: z.boolean().optional(),
 

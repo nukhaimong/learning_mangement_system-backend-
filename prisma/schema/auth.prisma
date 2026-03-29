@@ -19,6 +19,8 @@ model User {
   admin      Admin?
 
   @@unique([email])
+  @@index([id])
+  @@index([email])
   @@map("user")
 }
 

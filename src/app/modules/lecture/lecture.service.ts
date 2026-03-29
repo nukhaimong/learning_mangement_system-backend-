@@ -8,6 +8,7 @@ import {
   IUpdateLecturePayload,
 } from './lecture.interface';
 import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
+import { get } from 'node:http';
 
 const createLecture = async (
   user: IRequestUser,
@@ -61,7 +62,14 @@ const createLecture = async (
     });
   });
 };
-
+const getLecturesByModuleId = async (module_id: string) => {
+  return await prisma.lecture.findMany({
+    where: { module_id },
+    orderBy: {
+      order_index: 'asc',
+    },
+  });
+};
 const insertLecture = async (
   user: IRequestUser,
   payload: IInsertLecturePayload,
@@ -226,4 +234,5 @@ export const LectureService = {
   insertLecture,
   updateLecture,
   deleteLecture,
+  getLecturesByModuleId,
 };

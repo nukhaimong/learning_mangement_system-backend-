@@ -6,6 +6,11 @@ import { ModuleValidation } from './module.validation';
 import { ModuleController } from './module.controller';
 
 const router = Router();
+router.get(
+  '/:course_id',
+  checkAuth(Role.Instructor),
+  ModuleController.getModulesByCourseId,
+);
 
 router.post(
   '/',

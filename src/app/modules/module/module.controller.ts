@@ -17,6 +17,18 @@ const createModule = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getModulesByCourseId = catchAsync(async (req: Request, res: Response) => {
+  const course_id = req.params.course_id as string;
+  const result = await ModuleService.getModulesByCourseId(course_id);
+
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'Modules retrieved successfully',
+    data: result,
+  });
+});
+
 const insertModule = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const payload = req.body;
@@ -66,4 +78,5 @@ export const ModuleController = {
   insertModule,
   updateModule,
   deleteModule,
+  getModulesByCourseId,
 };

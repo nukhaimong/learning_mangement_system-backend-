@@ -1,8 +1,15 @@
 import { Router } from 'express';
 import { AuthController } from './auth.controller';
+import { checkAuth } from '../../middleware/checkAuth';
+import { Role } from '../../../generated/prisma/enums';
 
 const router = Router();
 
+router.get(
+  '/get-me',
+  checkAuth(Role.Learner, Role.Instructor, Role.Admin, Role.Super_admin),
+  AuthController.getMe,
+);
 router.get('/login/google', AuthController.googleLogin);
 router.get('/google/success', AuthController.googleLoginSuccess);
 router.put('/update-role', AuthController.updateRole);

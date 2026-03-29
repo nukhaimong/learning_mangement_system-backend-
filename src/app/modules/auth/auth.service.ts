@@ -21,6 +21,17 @@ const registration = async (payload: IRegistrationPayload) => {
   ) {
     throw new AppError(status.BAD_REQUEST, 'Invalid role');
   }
+  const alreadyExist = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+  if (alreadyExist) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      'User already exist with this email',
+    );
+  }
   const data = await auth.api.signUpEmail({
     body: {
       name,
@@ -216,6 +227,20 @@ const resetPassword = async (
   });
 };
 
+const getMe = async (user: IRequestUser) => {
+  const userExist = await prisma.user.findUnique({
+    where: { id: user.user_id },
+    include: {
+      learner: true,
+      instructor: true,
+      admin: true,
+    },
+  });
+  if (!userExist) {
+    throw new AppError(status.NOT_FOUND, 'user not found');
+  }
+  return userExist;
+};
 export const AuthService = {
   registration,
   login,
@@ -224,4 +249,5 @@ export const AuthService = {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  getMe,
 };

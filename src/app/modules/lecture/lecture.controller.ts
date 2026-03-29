@@ -21,6 +21,20 @@ const createLecture = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getLecturesByModuleId = catchAsync(
+  async (req: Request, res: Response) => {
+    const module_id = req.params.module_id as string;
+    const result = await LectureService.getLecturesByModuleId(module_id);
+
+    sendResponse(res, {
+      success: true,
+      httpStatusCode: status.OK,
+      message: 'Lectures retrieved successfully',
+      data: result,
+    });
+  },
+);
+
 const insertLecture = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const payload = {
@@ -80,4 +94,5 @@ export const LectureController = {
   insertLecture,
   updateLecture,
   deleteLecture,
+  getLecturesByModuleId,
 };

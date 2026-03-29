@@ -4,6 +4,7 @@ import AppError from '../../errorHelpers/appError';
 import { prisma } from '../../lib/prisma';
 import { ICreateModulePayload, IInsertModulePayload } from './module.inteface';
 import { IRequestUser } from '../../interfaces/requestUser.interface';
+import { get } from 'node:http';
 
 const createModule = async (
   user: IRequestUser,
@@ -53,6 +54,15 @@ const createModule = async (
         order_index: nextIndex,
       },
     });
+  });
+};
+
+const getModulesByCourseId = async (course_id: string) => {
+  return await prisma.module.findMany({
+    where: { course_id },
+    orderBy: {
+      order_index: 'asc',
+    },
   });
 };
 
@@ -202,4 +212,5 @@ export const ModuleService = {
   insertModule,
   updateModule,
   deleteModule,
+  getModulesByCourseId,
 };

@@ -90,7 +90,7 @@ const updateCourse = async (
     !thumbnail &&
     !intro_video &&
     !isFree &&
-    !isPublished &&
+    isPublished === null &&
     !level &&
     !course_fee &&
     !category_id

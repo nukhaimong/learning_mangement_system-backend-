@@ -132,6 +132,17 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const result = await AuthService.getMe(user);
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'User get successfully',
+    data: result,
+  });
+});
+
 export const AuthController = {
   registration,
   login,
@@ -141,4 +152,5 @@ export const AuthController = {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  getMe,
 };

@@ -8,6 +8,12 @@ import { LectureController } from './lecture.controller';
 
 const router = Router();
 
+router.get(
+  '/:module_id',
+  checkAuth(Role.Instructor),
+  LectureController.getLecturesByModuleId,
+);
+
 router.post(
   '/',
   checkAuth(Role.Instructor),
