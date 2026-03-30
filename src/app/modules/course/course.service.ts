@@ -4,6 +4,14 @@ import { IRequestUser } from '../../interfaces/requestUser.interface';
 import { prisma } from '../../lib/prisma';
 import { ICourseUpdatePayload, ICreateCoursePayload } from './course.interface';
 import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
+import { QueryBuilder } from '../../utils/queryBuilder';
+import { Course, Prisma } from '../../../generated/prisma/client';
+import {
+  courseFilterableFields,
+  courseIncludeConfig,
+  courseSearchableFields,
+} from './course.constant';
+import { IQueryParams } from '../../interfaces/query.interface';
 
 const createCourse = async (
   user: IRequestUser,
@@ -24,18 +32,46 @@ const createCourse = async (
   return course;
 };
 
-const getCourses = async () => {
-  return await prisma.course.findMany({
-    include: {
-      category: true,
+const getCourses = async (query: IQueryParams) => {
+  // return await prisma.course.findMany({
+  //   include: {
+  //     category: true,
+  //     instructor: {
+  //       select: {
+  //         id: true,
+  //         name: true,
+  //       },
+  //     },
+  //   },
+  // });
+  const queryBuilder = new QueryBuilder<
+    Course,
+    Prisma.CourseWhereInput,
+    Prisma.CourseInclude
+  >(prisma.course, query, {
+    searchableFields: courseSearchableFields,
+    filterableFields: courseFilterableFields,
+  });
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .include({
       instructor: {
         select: {
           id: true,
           name: true,
         },
       },
-    },
-  });
+      category: {
+        select: { id: true, title: true },
+      },
+    })
+    .paginate()
+    .sort()
+    .fields()
+    .execute();
+
+  return result;
 };
 
 const getCourseById = async (course_id: string) => {
@@ -48,10 +84,26 @@ const getCourseById = async (course_id: string) => {
           name: true,
         },
       },
+      category: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+      reviews: {
+        select: {
+          id: true,
+          content: true,
+          learner: {
+            select: { name: true },
+          },
+        },
+      },
       modules: {
         include: {
           lectures: {
             select: {
+              id: true,
               title: true,
               order_index: true,
             },
@@ -62,6 +114,11 @@ const getCourseById = async (course_id: string) => {
         },
         orderBy: {
           order_index: 'asc',
+        },
+      },
+      enrollments: {
+        select: {
+          id: true,
         },
       },
     },
