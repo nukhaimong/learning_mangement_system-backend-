@@ -5,6 +5,7 @@ import { prisma } from '../../lib/prisma';
 import { UserStatus } from '../../../generated/prisma/enums';
 import { stripe } from '../../../config/stripe.config';
 import { envVars } from '../../../config/env';
+import { en } from 'zod/locales';
 
 const enrollCourse = async (user: IRequestUser, course_id: string) => {
   const userData = await prisma.user.findUniqueOrThrow({
@@ -29,10 +30,12 @@ const enrollCourse = async (user: IRequestUser, course_id: string) => {
     throw new AppError(status.NOT_FOUND, 'Learner not found');
   }
 
-  const alreadyEnrolled = await prisma.enrollment.findFirst({
+  const alreadyEnrolled = await prisma.enrollment.findUnique({
     where: {
-      learner_id: learnerData.id,
-      course_id,
+      course_id_learner_id: {
+        course_id,
+        learner_id: learnerData.id,
+      },
     },
   });
 
@@ -80,6 +83,90 @@ const enrollCourse = async (user: IRequestUser, course_id: string) => {
   return session.url;
 };
 
+const getAllEnrollments = async () => {
+  return await prisma.enrollment.findMany({
+    include: {
+      payment: {
+        select: {
+          amount: true,
+          transaction_id: true,
+          createdAt: true,
+        },
+      },
+      learner: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      course: {
+        select: {
+          id: true,
+          title: true,
+          thumbnail: true,
+        },
+      },
+    },
+  });
+};
+
+const getEnrollmentsByLearnerId = async (user: IRequestUser) => {
+  const learnerData = await prisma.learner.findUnique({
+    where: {
+      user_id: user.user_id,
+    },
+  });
+  if (!learnerData) {
+    throw new AppError(status.NOT_FOUND, 'Learner not found');
+  }
+  return await prisma.enrollment.findMany({
+    where: {
+      learner_id: learnerData.id,
+    },
+    include: {
+      course: {
+        select: {
+          id: true,
+          title: true,
+          thumbnail: true,
+        },
+      },
+    },
+  });
+};
+
+const getEnrollmentById = async (enrollment_id: string) => {
+  return await prisma.enrollment.findUnique({
+    where: { id: enrollment_id },
+    include: {
+      course: {
+        select: {
+          id: true,
+          title: true,
+          thumbnail: true,
+          modules: {
+            select: {
+              id: true,
+              title: true,
+              lectures: {
+                select: {
+                  id: true,
+                  title: true,
+                  video_url: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
 export const EnrollmentService = {
   enrollCourse,
+  getEnrollmentsByLearnerId,
+  getEnrollmentById,
+  getAllEnrollments,
 };

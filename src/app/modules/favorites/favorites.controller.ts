@@ -5,8 +5,8 @@ import { sendResponse } from '../../../sharedFunction/sendResponse';
 import status from 'http-status';
 
 const addToFavorites = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body;
-  const result = await FavoritesService.addToFavorites(payload);
+  const { course_id } = req.body;
+  const result = await FavoritesService.addToFavorites(course_id, req.user);
   sendResponse(res, {
     success: true,
     httpStatusCode: status.CREATED,
@@ -14,10 +14,21 @@ const addToFavorites = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getAllFavoritesByLearnerId = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await FavoritesService.getAllFavoritesByLearnerId(req.user);
+    sendResponse(res, {
+      success: true,
+      httpStatusCode: status.OK,
+      message: 'Favorites retrived successfully',
+      data: result,
+    });
+  },
+);
 
 const deleteFavorites = catchAsync(async (req: Request, res: Response) => {
-  const { course_id, learner_id } = req.body;
-  const result = await FavoritesService.deleteFavorites(course_id, learner_id);
+  const { course_id } = req.body;
+  const result = await FavoritesService.deleteFavorites(course_id, req.user);
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,
@@ -29,4 +40,5 @@ const deleteFavorites = catchAsync(async (req: Request, res: Response) => {
 export const FavoritesController = {
   addToFavorites,
   deleteFavorites,
+  getAllFavoritesByLearnerId,
 };

@@ -13,7 +13,14 @@ import { Role } from '../../../generated/prisma/enums';
 const router = Router();
 
 router.get('/', CourseController.getCourses);
+router.get(
+  '/instructor',
+  checkAuth(Role.Instructor),
+  CourseController.getCourseByInstructorId,
+);
 router.get('/:course_id', CourseController.getCourseById);
+router.get('/category/:category_id', CourseController.getCourseByCategoryId);
+
 router.post(
   '/',
   checkAuth(Role.Instructor),

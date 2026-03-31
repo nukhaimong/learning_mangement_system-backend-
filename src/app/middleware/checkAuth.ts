@@ -15,7 +15,7 @@ export const checkAuth = (...authRoles: Role[]) => {
       if (!sessionToken) {
         throw new AppError(
           status.UNAUTHORIZED,
-          'Unauthorize access. No token is provided',
+          'Unauthorize access. No token is provided, Please Login',
         );
       }
       const isSessionExist = await prisma.session.findFirst({

@@ -29,6 +29,51 @@ const enrollCourse = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
+const getEnrollmentsByLearnerId = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user;
+    const result = await EnrollmentService.getEnrollmentsByLearnerId(user);
+    sendResponse(res, {
+      success: true,
+      httpStatusCode: status.OK,
+      message: 'Enrollments retrieved successfully',
+      data: result,
+    });
+  },
+);
+
+const getEnrollmentById = catchAsync(async (req: Request, res: Response) => {
+  const enrollment_id = req.params.enrollment_id as string;
+  const result = await EnrollmentService.getEnrollmentById(enrollment_id);
+  if (!result) {
+    sendResponse(res, {
+      success: false,
+      httpStatusCode: status.NOT_FOUND,
+      message: 'Enrollment not found',
+    });
+    return;
+  }
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'Enrollment retrieved successfully',
+    data: result,
+  });
+});
+
+const getAllEnrollments = catchAsync(async (req: Request, res: Response) => {
+  const result = await EnrollmentService.getAllEnrollments();
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'Enrollments successfully',
+    data: result,
+  });
+});
+
 export const EnrollmentController = {
   enrollCourse,
+  getEnrollmentsByLearnerId,
+  getEnrollmentById,
+  getAllEnrollments,
 };

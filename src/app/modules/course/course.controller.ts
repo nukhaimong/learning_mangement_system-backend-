@@ -41,6 +41,31 @@ const getCourseById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getCourseByCategoryId = catchAsync(
+  async (req: Request, res: Response) => {
+    const category_id = req.params.category_id as string;
+    const result = await CourseService.getCourseByCategoryId(category_id);
+    sendResponse(res, {
+      success: true,
+      httpStatusCode: status.OK,
+      message: 'Courses retrived successfully',
+      data: result,
+    });
+  },
+);
+
+const getCourseByInstructorId = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CourseService.getCourseByInstructoId(req.user);
+    sendResponse(res, {
+      success: true,
+      httpStatusCode: status.OK,
+      message: 'Courses retrived successfully',
+      data: result,
+    });
+  },
+);
+
 const updateCourse = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const course_id = req.params.course_id as string;
@@ -72,4 +97,6 @@ export const CourseController = {
   getCourseById,
   updateCourse,
   deleteCourse,
+  getCourseByCategoryId,
+  getCourseByInstructorId,
 };

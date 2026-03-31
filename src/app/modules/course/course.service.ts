@@ -12,6 +12,7 @@ import {
   courseSearchableFields,
 } from './course.constant';
 import { IQueryParams } from '../../interfaces/query.interface';
+import { get } from 'node:http';
 
 const createCourse = async (
   user: IRequestUser,
@@ -119,6 +120,53 @@ const getCourseById = async (course_id: string) => {
       enrollments: {
         select: {
           id: true,
+        },
+      },
+    },
+  });
+};
+const getCourseByCategoryId = async (catefory_id: string) => {
+  return prisma.course.findMany({
+    where: {
+      category_id: catefory_id,
+    },
+    include: {
+      instructor: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+    },
+  });
+};
+
+const getCourseByInstructoId = async (user: IRequestUser) => {
+  const instructorData = await prisma.instructor.findUnique({
+    where: {
+      user_id: user.user_id,
+    },
+  });
+  if (!instructorData) {
+    throw new AppError(status.NOT_FOUND, 'Instructor not found');
+  }
+  return await prisma.course.findMany({
+    where: {
+      instructor_id: instructorData.id,
+    },
+    include: {
+      enrollments: {
+        select: {
+          id: true,
+          payment: {
+            select: { amount: true },
+          },
         },
       },
     },
@@ -233,4 +281,6 @@ export const CourseService = {
   getCourseById,
   updateCourse,
   deleteCourse,
+  getCourseByCategoryId,
+  getCourseByInstructoId,
 };

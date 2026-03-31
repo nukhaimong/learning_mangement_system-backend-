@@ -2,8 +2,18 @@ import status from 'http-status';
 import { Favorites } from '../../../generated/prisma/client';
 import AppError from '../../errorHelpers/appError';
 import { prisma } from '../../lib/prisma';
+import { IRequestUser } from '../../interfaces/requestUser.interface';
 
-const addToFavorites = async ({ course_id, learner_id }: Favorites) => {
+const addToFavorites = async (course_id: string, user: IRequestUser) => {
+  const learnerData = await prisma.learner.findUnique({
+    where: {
+      user_id: user.user_id,
+    },
+  });
+  if (!learnerData) {
+    throw new AppError(status.NOT_FOUND, 'Learner not found');
+  }
+  const learner_id = learnerData.id;
   const isFavoriteExist = await prisma.favorites.findUnique({
     where: {
       course_id_learner_id: {
@@ -26,7 +36,17 @@ const addToFavorites = async ({ course_id, learner_id }: Favorites) => {
   });
 };
 
-const deleteFavorites = async (course_id: string, learner_id: string) => {
+const deleteFavorites = async (course_id: string, user: IRequestUser) => {
+  const learnerData = await prisma.learner.findUnique({
+    where: {
+      user_id: user.user_id,
+    },
+  });
+  if (!learnerData) {
+    throw new AppError(status.NOT_FOUND, 'Learner not found');
+  }
+  const learner_id = learnerData.id;
+
   const favoriteToDelete = await prisma.favorites.findUnique({
     where: {
       course_id_learner_id: {
@@ -48,7 +68,27 @@ const deleteFavorites = async (course_id: string, learner_id: string) => {
   });
 };
 
+const getAllFavoritesByLearnerId = async (user: IRequestUser) => {
+  const learnerData = await prisma.learner.findUnique({
+    where: {
+      user_id: user.user_id,
+    },
+  });
+  if (!learnerData) {
+    throw new AppError(status.NOT_FOUND, 'Learner not found');
+  }
+  return await prisma.favorites.findMany({
+    where: {
+      learner_id: learnerData.id,
+    },
+    include: {
+      course: true,
+    },
+  });
+};
+
 export const FavoritesService = {
   addToFavorites,
   deleteFavorites,
+  getAllFavoritesByLearnerId,
 };

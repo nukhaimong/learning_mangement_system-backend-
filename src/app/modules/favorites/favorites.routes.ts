@@ -13,11 +13,16 @@ router.post(
   validateRequest(FavoritesValidation.createFavoritesSchema),
   FavoritesController.addToFavorites,
 );
+router.get(
+  '/',
+  checkAuth(Role.Learner),
+  FavoritesController.getAllFavoritesByLearnerId,
+);
 router.delete(
   '/delete',
   checkAuth(Role.Learner),
   validateRequest(FavoritesValidation.deleteFavoritesSchema),
-  FavoritesController.addToFavorites,
+  FavoritesController.deleteFavorites,
 );
 
 export const FavoritesRoutes = router;
