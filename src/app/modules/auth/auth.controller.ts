@@ -5,7 +5,6 @@ import { sendResponse } from '../../../sharedFunction/sendResponse';
 import status from 'http-status';
 import { envVars } from '../../../config/env';
 import { auth } from '../../lib/auth';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
 import AppError from '../../errorHelpers/appError';
 import { tokenUtils } from '../../utils/token';
 import { User } from '../../../generated/prisma/client';

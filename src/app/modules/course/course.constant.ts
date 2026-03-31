@@ -1,4 +1,3 @@
-import { tr } from 'zod/locales';
 import { Prisma } from '../../../generated/prisma/client';
 
 export const courseSearchableFields = [

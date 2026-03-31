@@ -1,5 +1,4 @@
 import status from 'http-status';
-import { Favorites } from '../../../generated/prisma/client';
 import AppError from '../../errorHelpers/appError';
 import { prisma } from '../../lib/prisma';
 import { IRequestUser } from '../../interfaces/requestUser.interface';

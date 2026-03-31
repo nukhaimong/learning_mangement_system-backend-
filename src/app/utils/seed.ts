@@ -1,4 +1,3 @@
-import { createLogger } from 'better-auth';
 import { Role } from '../../generated/prisma/enums';
 import { prisma } from '../lib/prisma';
 import { auth } from '../lib/auth';

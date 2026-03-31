@@ -8,7 +8,6 @@ import {
   IUpdateLecturePayload,
 } from './lecture.interface';
 import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
-import { get } from 'node:http';
 
 const createLecture = async (
   user: IRequestUser,

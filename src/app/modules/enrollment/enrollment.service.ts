@@ -5,7 +5,6 @@ import { prisma } from '../../lib/prisma';
 import { UserStatus } from '../../../generated/prisma/enums';
 import { stripe } from '../../../config/stripe.config';
 import { envVars } from '../../../config/env';
-import { en } from 'zod/locales';
 
 const enrollCourse = async (user: IRequestUser, course_id: string) => {
   const userData = await prisma.user.findUniqueOrThrow({

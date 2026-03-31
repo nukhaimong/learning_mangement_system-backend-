@@ -1,4 +1,4 @@
-import z, { uuid } from 'zod';
+import z from 'zod';
 
 const createModuleSchema = z.object({
   title: z.string('Title must be a string'),

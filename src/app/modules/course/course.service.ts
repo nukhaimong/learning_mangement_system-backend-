@@ -8,11 +8,9 @@ import { QueryBuilder } from '../../utils/queryBuilder';
 import { Course, Prisma } from '../../../generated/prisma/client';
 import {
   courseFilterableFields,
-  courseIncludeConfig,
   courseSearchableFields,
 } from './course.constant';
 import { IQueryParams } from '../../interfaces/query.interface';
-import { get } from 'node:http';
 
 const createCourse = async (
   user: IRequestUser,
