@@ -1,5 +1,5 @@
 import z from 'zod';
-import { Level } from '../../../generated/prisma/enums';
+import { Level } from '../../../generated/prisma';
 
 export const createCourseZodSchema = z.object({
   title: z

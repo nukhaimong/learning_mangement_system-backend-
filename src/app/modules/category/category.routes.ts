@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { CategoryController } from './category.controller.js';
 import { checkAuth } from '../../middleware/checkAuth.js';
-import { Role } from '../../../generated/prisma/enums.js';
 import { validateRequest } from '../../middleware/validateRequest.js';
 import { CategoryValidation } from './category.validation.js';
+import { Role } from '../../../generated/prisma/index.js';
 
 const router = Router();
 
