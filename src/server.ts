@@ -1,7 +1,7 @@
 import { Server } from 'http';
-import app from './app';
+import app from './app.js';
 import { envVars } from './config/env';
-import { seedSuperAdmin } from './app/utils/seed';
+import { seedSuperAdmin } from './app/utils/seed.js';
 
 let server: Server;
 const PORT = envVars.PORT;
