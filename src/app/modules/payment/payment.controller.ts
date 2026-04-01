@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { envVars } from '../../../config/env';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { envVars } from '../../../config/env.js';
 import status from 'http-status';
-import { stripe } from '../../../config/stripe.config';
-import { PaymentService } from './payment.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { stripe } from '../../../config/stripe.config.js';
+import { PaymentService } from './payment.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 
 const handleStripeWebhookEvent = catchAsync(
   async (req: Request, res: Response) => {

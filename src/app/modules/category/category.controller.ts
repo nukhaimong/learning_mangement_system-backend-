@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { CategoryService } from './category.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { CategoryService } from './category.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
 
 const createCategory = catchAsync(async (req: Request, res: Response) => {

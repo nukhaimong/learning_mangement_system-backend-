@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { cookieUtils } from './cookies';
+import { cookieUtils } from './cookies.js';
 
 const setBetterAuthSessionToken = (res: Response, token: string) => {
   cookieUtils.setCookie(res, 'better-auth.session_token', token, {

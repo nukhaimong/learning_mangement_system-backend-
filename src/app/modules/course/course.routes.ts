@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { multerUpload } from '../../../config/multer.config';
+import { multerUpload } from '../../../config/multer.config.js';
 import {
   createCourseMiddleware,
   updateCourseMiddleware,
-} from './course.middleware';
-import { validateRequest } from '../../middleware/validateRequest';
-import { CourseValidation } from './course.validation';
-import { CourseController } from './course.controller';
-import { checkAuth } from '../../middleware/checkAuth';
-import { Role } from '../../../generated/prisma/enums';
+} from './course.middleware.js';
+import { validateRequest } from '../../middleware/validateRequest.js';
+import { CourseValidation } from './course.validation.js';
+import { CourseController } from './course.controller.js';
+import { checkAuth } from '../../middleware/checkAuth.js';
+import { Role } from '../../../generated/prisma/enums.js';
 
 const router = Router();
 

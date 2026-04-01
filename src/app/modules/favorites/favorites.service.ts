@@ -1,7 +1,7 @@
 import status from 'http-status';
-import AppError from '../../errorHelpers/appError';
-import { prisma } from '../../lib/prisma';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
+import AppError from '../../errorHelpers/appError.js';
+import { prisma } from '../../lib/prisma.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
 
 const addToFavorites = async (course_id: string, user: IRequestUser) => {
   const learnerData = await prisma.learner.findUnique({

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
-import { InstructorService } from './instructor.service';
+import { InstructorService } from './instructor.service.js';
 
 const getInstructors = catchAsync(async (req: Request, res: Response) => {
   const result = await InstructorService.getInstructors();

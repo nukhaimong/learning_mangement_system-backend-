@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { FavoritesService } from './favorites.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { FavoritesService } from './favorites.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
 
 const addToFavorites = catchAsync(async (req: Request, res: Response) => {

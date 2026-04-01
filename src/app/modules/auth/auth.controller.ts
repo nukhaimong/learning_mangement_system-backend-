@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { AuthService } from './auth.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { AuthService } from './auth.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
-import { envVars } from '../../../config/env';
-import { auth } from '../../lib/auth';
-import AppError from '../../errorHelpers/appError';
-import { tokenUtils } from '../../utils/token';
-import { User } from '../../../generated/prisma/client';
+import { envVars } from '../../../config/env.js';
+import { auth } from '../../lib/auth.js';
+import AppError from '../../errorHelpers/appError.js';
+import { tokenUtils } from '../../utils/token.js';
+import { User } from '../../../generated/prisma/client.js';
 
 const registration = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;

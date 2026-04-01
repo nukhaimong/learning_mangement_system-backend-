@@ -1,10 +1,10 @@
 import status from 'http-status';
-import AppError from '../../errorHelpers/appError';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { prisma } from '../../lib/prisma';
-import { UserStatus } from '../../../generated/prisma/enums';
-import { stripe } from '../../../config/stripe.config';
-import { envVars } from '../../../config/env';
+import AppError from '../../errorHelpers/appError.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { prisma } from '../../lib/prisma.js';
+import { UserStatus } from '../../../generated/prisma/enums.js';
+import { stripe } from '../../../config/stripe.config.js';
+import { envVars } from '../../../config/env.js';
 
 const enrollCourse = async (user: IRequestUser, course_id: string) => {
   const userData = await prisma.user.findUniqueOrThrow({

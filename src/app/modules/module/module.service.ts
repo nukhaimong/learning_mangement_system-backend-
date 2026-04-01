@@ -1,10 +1,11 @@
 import status from 'http-status';
-import { Module } from '../../../generated/prisma/client';
-import AppError from '../../errorHelpers/appError';
-import { prisma } from '../../lib/prisma';
-import { ICreateModulePayload, IInsertModulePayload } from './module.inteface';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { get } from 'node:http';
+import AppError from '../../errorHelpers/appError.js';
+import { prisma } from '../../lib/prisma.js';
+import {
+  ICreateModulePayload,
+  IInsertModulePayload,
+} from './module.inteface.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
 
 const createModule = async (
   user: IRequestUser,

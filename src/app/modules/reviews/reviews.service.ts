@@ -1,7 +1,7 @@
 import status from 'http-status';
-import { Reviews } from '../../../generated/prisma/client';
-import AppError from '../../errorHelpers/appError';
-import { prisma } from '../../lib/prisma';
+import { Reviews } from '../../../generated/prisma/client.js';
+import AppError from '../../errorHelpers/appError.js';
+import { prisma } from '../../lib/prisma.js';
 
 const createReviews = async ({ content, course_id, learner_id }: Reviews) => {
   const isEnrollmentExist = await prisma.enrollment.findUnique({

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { EnrollmentService } from './enrollment.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { EnrollmentService } from './enrollment.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
 
 const enrollCourse = catchAsync(async (req: Request, res: Response) => {

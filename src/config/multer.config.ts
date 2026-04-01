@@ -1,6 +1,6 @@
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { cloudinaryUpload } from './cloudinary.config';
-import AppError from '../app/errorHelpers/appError';
+import { cloudinaryUpload } from './cloudinary.config.js';
+import AppError from '../app/errorHelpers/appError.js';
 import status from 'http-status';
 import multer from 'multer';
 

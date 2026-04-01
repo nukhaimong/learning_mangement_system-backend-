@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { catchAsync } from '../../../sharedFunction/catchAsync';
-import { CourseService } from './course.service';
-import { sendResponse } from '../../../sharedFunction/sendResponse';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { CourseService } from './course.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
-import { IQueryParams } from '../../interfaces/query.interface';
+import { IQueryParams } from '../../interfaces/query.interface.js';
 
 const createCourse = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;

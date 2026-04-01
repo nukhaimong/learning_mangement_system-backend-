@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { checkAuth } from '../../middleware/checkAuth';
-import { Role } from '../../../generated/prisma/enums';
-import { validateRequest } from '../../middleware/validateRequest';
-import { LectureValidation } from './lecture.validation';
-import { multerUpload } from '../../../config/multer.config';
-import { LectureController } from './lecture.controller';
+import { checkAuth } from '../../middleware/checkAuth.js';
+import { Role } from '../../../generated/prisma/enums.js';
+import { validateRequest } from '../../middleware/validateRequest.js';
+import { LectureValidation } from './lecture.validation.js';
+import { multerUpload } from '../../../config/multer.config.js';
+import { LectureController } from './lecture.controller.js';
 
 const router = Router();
 

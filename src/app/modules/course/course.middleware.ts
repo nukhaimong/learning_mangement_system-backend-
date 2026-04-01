@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { ICourseUpdatePayload, ICreateCoursePayload } from './course.interface';
-import AppError from '../../errorHelpers/appError';
+import {
+  ICourseUpdatePayload,
+  ICreateCoursePayload,
+} from './course.interface.js';
+import AppError from '../../errorHelpers/appError.js';
 import status from 'http-status';
 
 export const createCourseMiddleware = (

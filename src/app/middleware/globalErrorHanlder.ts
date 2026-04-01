@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { envVars } from '../../config/env';
-import AppError from '../errorHelpers/appError';
-import { TErrorResponse, TErrorSources } from '../interfaces/errorInterface';
+import { envVars } from '../../config/env.js';
+import AppError from '../errorHelpers/appError.js';
+import { TErrorResponse, TErrorSources } from '../interfaces/errorInterface.js';
 import status from 'http-status';
 import z from 'zod';
-import { handlerZodError } from '../errorHelpers/zodErrors';
-import { deleteUploadedFilesFromGlobalErrorHanlder } from '../utils/deleteUploadedFiles';
+import { handlerZodError } from '../errorHelpers/zodErrors.js';
+import { deleteUploadedFilesFromGlobalErrorHanlder } from '../utils/deleteUploadedFiles.js';
 
 export const globalErrorHandler = async (
   err: any,

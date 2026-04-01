@@ -1,10 +1,10 @@
 import status from 'http-status';
-import { Role } from '../../../generated/prisma/enums';
-import AppError from '../../errorHelpers/appError';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { prisma } from '../../lib/prisma';
-import { IUpdateLearnerPayload } from './learner.interface';
-import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
+import { Role } from '../../../generated/prisma/enums.js';
+import AppError from '../../errorHelpers/appError.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { prisma } from '../../lib/prisma.js';
+import { IUpdateLearnerPayload } from './learner.interface.js';
+import { deleteFileFromCloudinary } from '../../../config/cloudinary.config.js';
 
 const getLearners = async () => {
   return await prisma.learner.findMany();

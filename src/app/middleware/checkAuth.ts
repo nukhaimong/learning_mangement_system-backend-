@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { Role, UserStatus } from '../../generated/prisma/enums';
-import { cookieUtils } from '../utils/cookies';
-import AppError from '../errorHelpers/appError';
+import { Role, UserStatus } from '../../generated/prisma/enums.js';
+import { cookieUtils } from '../utils/cookies.js';
+import AppError from '../errorHelpers/appError.js';
 import status from 'http-status';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../lib/prisma.js';
 
 export const checkAuth = (...authRoles: Role[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {

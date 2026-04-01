@@ -1,7 +1,7 @@
 import status from 'http-status';
-import AppError from '../../errorHelpers/appError';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { prisma } from '../../lib/prisma';
+import AppError from '../../errorHelpers/appError.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { prisma } from '../../lib/prisma.js';
 import {
   ICreateLecturePayload,
   IInsertLecturePayload,

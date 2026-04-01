@@ -1,4 +1,4 @@
-import { Level } from '../../../generated/prisma/enums';
+import { Level } from '../../../generated/prisma/enums.js';
 
 export interface ICreateCoursePayload {
   title: string;

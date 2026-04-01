@@ -1,14 +1,14 @@
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
-import { globalErrorHandler } from './app/middleware/globalErrorHanlder';
-import { notFound } from './app/middleware/notFound';
+import { globalErrorHandler } from './app/middleware/globalErrorHanlder.js';
+import { notFound } from './app/middleware/notFound.js';
 import { IndexRoutes } from './app/router';
 import path from 'path';
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from './app/lib/auth';
+import { auth } from './app/lib/auth.js';
 import cors from 'cors';
 import { envVars } from './config/env';
-import { PaymentController } from './app/modules/payment/payment.controller';
+import { PaymentController } from './app/modules/payment/payment.controller.js';
 
 const app: Application = express();
 

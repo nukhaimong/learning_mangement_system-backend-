@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
-import { envVars } from '../../config/env';
+import { envVars } from '../../config/env.js';
 import path from 'path';
 import ejs from 'ejs';
-import AppError from '../errorHelpers/appError';
+import AppError from '../errorHelpers/appError.js';
 import status from 'http-status';
 
 const transporter = nodemailer.createTransport({

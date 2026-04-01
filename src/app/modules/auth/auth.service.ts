@@ -1,11 +1,11 @@
 import status from 'http-status';
-import AppError from '../../errorHelpers/appError';
-import { auth } from '../../lib/auth';
-import { ILoginPayload, IRegistrationPayload } from './auth.interface';
-import { Role, UserStatus } from '../../../generated/prisma/enums';
-import { prisma } from '../../lib/prisma';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { User } from '../../../generated/prisma/client';
+import AppError from '../../errorHelpers/appError.js';
+import { auth } from '../../lib/auth.js';
+import { ILoginPayload, IRegistrationPayload } from './auth.interface.js';
+import { Role, UserStatus } from '../../../generated/prisma/enums.js';
+import { prisma } from '../../lib/prisma.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { User } from '../../../generated/prisma/client.js';
 
 const registration = async (payload: IRegistrationPayload) => {
   const { name, email, password, role } = payload;

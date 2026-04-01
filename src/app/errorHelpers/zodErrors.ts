@@ -1,5 +1,5 @@
 import z from 'zod';
-import { TErrorResponse, TErrorSources } from '../interfaces/errorInterface';
+import { TErrorResponse, TErrorSources } from '../interfaces/errorInterface.js';
 import status from 'http-status';
 
 export const handlerZodError = (err: z.ZodError): TErrorResponse => {

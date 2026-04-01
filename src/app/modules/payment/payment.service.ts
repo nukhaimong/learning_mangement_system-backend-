@@ -1,10 +1,10 @@
 import Stripe from 'stripe';
-import { prisma } from '../../lib/prisma';
-import { PaymentStatus } from '../../../generated/prisma/enums';
+import { prisma } from '../../lib/prisma.js';
+import { PaymentStatus } from '../../../generated/prisma/enums.js';
 import { v7 as uuidv7 } from 'uuid';
-import { generatePaymentPdf } from './payment.utils';
-import { sendEmail } from '../../utils/email';
-import AppError from '../../errorHelpers/appError';
+import { generatePaymentPdf } from './payment.utils.js';
+import { sendEmail } from '../../utils/email.js';
+import AppError from '../../errorHelpers/appError.js';
 import status from 'http-status';
 
 const handleStripeWebhookEvent = async (event: Stripe.Event) => {
