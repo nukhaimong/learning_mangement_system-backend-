@@ -6,7 +6,7 @@ import { emailOTP } from 'better-auth/plugins';
 import { sendEmail } from '../utils/email.js';
 import AppError from '../errorHelpers/appError.js';
 import status from 'http-status';
-import { Role, UserStatus } from '../../generated/prisma/index.js';
+import { Role, UserStatus } from '../../generated/prisma/enums.js';
 
 export const auth = betterAuth({
   baseURL: envVars.BETTER_AUTH_URL,

@@ -3,7 +3,7 @@ import { CategoryController } from './category.controller.js';
 import { checkAuth } from '../../middleware/checkAuth.js';
 import { validateRequest } from '../../middleware/validateRequest.js';
 import { CategoryValidation } from './category.validation.js';
-import { Role } from '../../../generated/prisma/index.js';
+import { Role } from '../../../generated/prisma/enums.js';
 
 const router = Router();
 
