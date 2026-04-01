@@ -1,38 +1,59 @@
-Project Name: Learning Managament system
+# Learning Management System (LMS) - Backend
 
-A Backend project where people who want to learn and who want to tech can get together and instructor can offer courses for free or with reasonable price and learner can enroll courses and start learning.
-and Admin will manage and monitor the app.
+A comprehensive backend system for a Learning Management Platform where instructors can create and manage courses, learners can enroll in them, and admins oversee the entire platform. The platform supports both free and paid courses with secure payment processing.
 
-Tech Stack
-Node.js
-Express
-TypeScript
-Prisma ORM for Postgresql
-Database-> Postgresql
-Zod validation
-Better-Auth
+## 🚀 Tech Stack
 
-Features:
-Authentication: authentication is implemented using better-auth with custom routes for better flexibility where users can register base on there role (Learner or Instructor). And Super admin is seeded manually. and user must verify there email, and google login also implemented here.
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **ORM**: Prisma with PostgreSQL
+- **Database**: PostgreSQL
+- **Validation**: Zod
+- **Authentication**: Better-Auth
+- **File Storage**: Cloudinary
+- **Payment Gateway**: Stripe
 
-Authirization: Role based authorization is implemented. and there are also some publich routes
+## ✨ Features
 
-Category: Only Admin can create, edit, and delete category. And every one can get category
+### 🔐 Authentication & Authorization
 
-course | Module | lecture: Only admin can create, edit and delete course, module and lecture. and every one can get courses
+- **Role-based Authentication** using Better-Auth with custom routes
+- **User Roles**: Learner, Instructor, and Super Admin (seeded manually)
+- **Email Verification** with OTP
+- **Google Login** integration
+- **Role-based Authorization** with public routes support
 
-enrollment: Only learner can enroll each course in one time.
+### 📚 Course Management
 
-payment: learner must complete payment to complete enrollment. Stripe is integrated as payment gateway.
+- **Categories**: Admin-only CRUD operations, public viewing
+- **Courses**: Instructor-only CRUD operations, public viewing
+- **Modules**: Instructor-only CRUD operations
+- **Lectures**: Instructor-only CRUD operations with video upload support
 
-favorites: learning can add courses to favorites so they can enroll them later.
+### 👨‍🎓 Learner Features
 
-review: learner can leaves reviews after enrollment.
+- **Course Enrollment**: One-time enrollment per course
+- **Payment Processing**: Stripe integration for course payments
+- **Favorites**: Save courses for later enrollment
+- **Reviews**: Leave reviews after course completion
+- **Profile Management**: Update personal information
 
-profile: learner, instructor and admin can update their profile.
+### 👨‍🏫 Instructor Features
 
-cloudinary: Cloudinary integrated for photo and video uploading.
+- **Course Management**: Create, update, and delete courses, modules, and lectures
+- **Profile Management**: Update personal information
 
-sendEmail: sendEmail function is implemented to send otp for email verification and reset password, and invoice pdf.
+### 👑 Admin Features
 
-env: follow .env.example to set up .evn file
+- **Category Management**: Create, update, and delete categories
+- **Platform Monitoring**: Oversee all platform activities
+- **Profile Management**: Update personal information
+
+### 📧 Additional Features
+
+- **Email Service**: Send OTP for verification, password reset, and invoice PDFs
+- **File Upload**: Cloudinary integration for photos and videos
+- **Invoice Generation**: Automatic PDF invoice generation after successful payment
+
+## follow .env.example to use the code base
