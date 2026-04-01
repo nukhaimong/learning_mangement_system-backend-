@@ -5,8 +5,12 @@ import { sendResponse } from '../../../sharedFunction/sendResponse.js';
 import status from 'http-status';
 
 const createReviews = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body;
-  const result = await ReviewsService.createReviews(payload);
+  const { course_id, content } = req.body;
+  const result = await ReviewsService.createReviews(
+    course_id,
+    content,
+    req.user,
+  );
   sendResponse(res, {
     success: true,
     httpStatusCode: status.CREATED,

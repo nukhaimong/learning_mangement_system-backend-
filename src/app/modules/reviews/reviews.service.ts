@@ -2,13 +2,23 @@ import status from 'http-status';
 import { Reviews } from '../../../generated/prisma/client.js';
 import AppError from '../../errorHelpers/appError.js';
 import { prisma } from '../../lib/prisma.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
 
-const createReviews = async ({ content, course_id, learner_id }: Reviews) => {
+const createReviews = async (
+  course_id: string,
+  content: string,
+  user: IRequestUser,
+) => {
+  const learnerData = await prisma.learner.findUniqueOrThrow({
+    where: {
+      user_id: user.user_id,
+    },
+  });
   const isEnrollmentExist = await prisma.enrollment.findUnique({
     where: {
       course_id_learner_id: {
         course_id,
-        learner_id,
+        learner_id: learnerData.id,
       },
     },
   });
@@ -22,7 +32,7 @@ const createReviews = async ({ content, course_id, learner_id }: Reviews) => {
     data: {
       content,
       course_id,
-      learner_id,
+      learner_id: learnerData.id,
     },
   });
 };
