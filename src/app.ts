@@ -7,7 +7,7 @@ import path from 'path';
 import { toNodeHandler } from 'better-auth/node';
 import { auth } from './app/lib/auth.js';
 import cors from 'cors';
-import { envVars } from './config/env';
+import { envVars } from './config/env.js';
 import { PaymentController } from './app/modules/payment/payment.controller.js';
 
 const app: Application = express();
