@@ -5,7 +5,7 @@ import { prisma } from '../../lib/prisma';
 import { ICourseUpdatePayload, ICreateCoursePayload } from './course.interface';
 import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
 import { QueryBuilder } from '../../utils/queryBuilder';
-import { Course, Prisma } from '../../../generated/prisma/client';
+import { Course, Prisma } from '../../../generated/prisma/client.js';
 import {
   courseFilterableFields,
   courseSearchableFields,

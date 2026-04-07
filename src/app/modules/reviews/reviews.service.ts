@@ -1,5 +1,4 @@
 import status from 'http-status';
-import { Reviews } from '../../../generated/prisma/client.js';
 import AppError from '../../errorHelpers/appError.js';
 import { prisma } from '../../lib/prisma.js';
 import { IRequestUser } from '../../interfaces/requestUser.interface.js';
