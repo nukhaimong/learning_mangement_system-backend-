@@ -1,0 +1,23 @@
+enum Role {
+  Admin
+  Super_admin
+  Learner
+  Instructor
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum Level {
+  Beginner
+  Intermediate
+  Advanced
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+}

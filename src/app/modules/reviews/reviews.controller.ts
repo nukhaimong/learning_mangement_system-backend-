@@ -1,0 +1,52 @@
+import { Request, Response } from 'express';
+import { catchAsync } from '../../../sharedFunction/catchAsync.js';
+import { ReviewsService } from './reviews.service.js';
+import { sendResponse } from '../../../sharedFunction/sendResponse.js';
+import status from 'http-status';
+
+const createReviews = catchAsync(async (req: Request, res: Response) => {
+  const { course_id, content } = req.body;
+  const result = await ReviewsService.createReviews(
+    course_id,
+    content,
+    req.user,
+  );
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.CREATED,
+    message: 'Reviews created successfully',
+    data: result,
+  });
+});
+
+const updateReviews = catchAsync(async (req: Request, res: Response) => {
+  const { content, reviews_id, learner_id } = req.body;
+  const result = await ReviewsService.updateReviews(
+    content,
+    reviews_id,
+    learner_id,
+  );
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'Reviews updated successfully',
+    data: result,
+  });
+});
+
+const deleteReviews = catchAsync(async (req: Request, res: Response) => {
+  const { reviews_id, learner_id } = req.body;
+  const result = await ReviewsService.deleteReviews(reviews_id, learner_id);
+  sendResponse(res, {
+    success: true,
+    httpStatusCode: status.OK,
+    message: 'Reviews deleted successfully',
+    data: result,
+  });
+});
+
+export const ReviewsController = {
+  createReviews,
+  updateReviews,
+  deleteReviews,
+};
