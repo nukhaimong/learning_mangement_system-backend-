@@ -6,7 +6,6 @@ const setBetterAuthSessionToken = (res: Response, token: string) => {
     httpOnly: true,
     sameSite: 'none',
     secure: true,
-    partitioned: true,
     path: '/',
     maxAge: 60 * 60 * 24 * 7 * 1000,
   });
