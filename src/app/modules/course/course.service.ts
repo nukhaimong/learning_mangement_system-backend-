@@ -1,16 +1,19 @@
 import status from 'http-status';
-import AppError from '../../errorHelpers/appError';
-import { IRequestUser } from '../../interfaces/requestUser.interface';
-import { prisma } from '../../lib/prisma';
-import { ICourseUpdatePayload, ICreateCoursePayload } from './course.interface';
-import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
-import { QueryBuilder } from '../../utils/queryBuilder';
+import AppError from '../../errorHelpers/appError.js';
+import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { prisma } from '../../lib/prisma.js';
+import {
+  ICourseUpdatePayload,
+  ICreateCoursePayload,
+} from './course.interface.js';
+import { deleteFileFromCloudinary } from '../../../config/cloudinary.config.js';
+import { QueryBuilder } from '../../utils/queryBuilder.js';
 import { Course, Prisma } from '../../../generated/prisma/client.js';
 import {
   courseFilterableFields,
   courseSearchableFields,
-} from './course.constant';
-import { IQueryParams } from '../../interfaces/query.interface';
+} from './course.constant.js';
+import { IQueryParams } from '../../interfaces/query.interface.js';
 
 const createCourse = async (
   user: IRequestUser,
