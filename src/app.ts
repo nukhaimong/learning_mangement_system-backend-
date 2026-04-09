@@ -39,8 +39,8 @@ app.set('views', path.resolve(process.cwd(), `src/app/templates`));
 app.use('/api/auth', toNodeHandler(auth));
 
 app.use('/api/v1/', IndexRoutes);
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/', (req, res) => {
+  res.send('api is working yeeyyyyyy');
 });
 
 app.use(globalErrorHandler);
