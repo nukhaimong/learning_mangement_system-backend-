@@ -6,6 +6,7 @@ import { generatePaymentPdf } from './payment.utils.js';
 import { sendEmail } from '../../utils/email.js';
 import AppError from '../../errorHelpers/appError.js';
 import status from 'http-status';
+import { Prisma } from '@prisma/client/extension.js';
 
 const handleStripeWebhookEvent = async (event: Stripe.Event) => {
   const existingPayment = await prisma.payment.findFirst({
@@ -37,41 +38,43 @@ const handleStripeWebhookEvent = async (event: Stripe.Event) => {
       let pdfBuffer: Buffer | null = null;
       //let invoiceUrl: string | null = null;
 
-      const result = await prisma.$transaction(async (tx) => {
-        const enroll = await tx.enrollment.create({
-          data: {
-            learner_id: learner_id,
-            course_id: course_id,
-          },
-          include: {
-            learner: {
-              select: {
-                name: true,
-                email: true,
+      const result = await prisma.$transaction(
+        async (tx: Prisma.TransactionClient) => {
+          const enroll = await tx.enrollment.create({
+            data: {
+              learner_id: learner_id,
+              course_id: course_id,
+            },
+            include: {
+              learner: {
+                select: {
+                  name: true,
+                  email: true,
+                },
+              },
+              course: {
+                select: {
+                  title: true,
+                },
               },
             },
-            course: {
-              select: {
-                title: true,
-              },
+          });
+          const payment = await tx.payment.create({
+            data: {
+              enrollment_id: enroll.id,
+              payment_Status:
+                session.payment_status === 'paid'
+                  ? PaymentStatus.PAID
+                  : PaymentStatus.UNPAID,
+              stripe_event_id: event.id,
+              payment_gateway_data: session as any,
+              transaction_id: transaction_id,
+              amount: amount,
             },
-          },
-        });
-        const payment = await tx.payment.create({
-          data: {
-            enrollment_id: enroll.id,
-            payment_Status:
-              session.payment_status === 'paid'
-                ? PaymentStatus.PAID
-                : PaymentStatus.UNPAID,
-            stripe_event_id: event.id,
-            payment_gateway_data: session as any,
-            transaction_id: transaction_id,
-            amount: amount,
-          },
-        });
-        return { payment, enroll };
-      });
+          });
+          return { payment, enroll };
+        },
+      );
 
       if (session.payment_status === 'paid') {
         try {

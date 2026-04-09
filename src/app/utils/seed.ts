@@ -2,6 +2,7 @@ import { prisma } from '../lib/prisma.js';
 import { auth } from '../lib/auth.js';
 import { envVars } from '../../config/env.js';
 import { Role } from '../../generated/prisma/enums.js';
+import { Prisma } from '@prisma/client/extension.js';
 
 export const seedSuperAdmin = async () => {
   try {
@@ -21,7 +22,7 @@ export const seedSuperAdmin = async () => {
         role: Role.Super_admin,
       },
     });
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.user.update({
         where: {
           id: superAdminUser.user.id,

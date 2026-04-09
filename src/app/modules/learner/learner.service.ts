@@ -5,6 +5,7 @@ import { IRequestUser } from '../../interfaces/requestUser.interface.js';
 import { prisma } from '../../lib/prisma.js';
 import { IUpdateLearnerPayload } from './learner.interface.js';
 import { deleteFileFromCloudinary } from '../../../config/cloudinary.config.js';
+import { Prisma } from '@prisma/client/extension.js';
 
 const getLearners = async () => {
   return await prisma.learner.findMany();
@@ -67,7 +68,7 @@ const updateLearner = async (
     throw new AppError(status.UNAUTHORIZED, 'You can only update your account');
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const updatedLearner = await tx.learner.update({
       where: { id: learner_id },
       data: payload,
@@ -106,7 +107,7 @@ const deleteLearner = async (user: IRequestUser, learner_id: string) => {
     throw new AppError(status.UNAUTHORIZED, 'You can only delete your account');
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const deletedLearner = await tx.instructor.update({
       where: { id: learner_id },
       data: {

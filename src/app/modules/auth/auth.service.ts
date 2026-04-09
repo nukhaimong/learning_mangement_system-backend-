@@ -6,6 +6,7 @@ import { Role, UserStatus } from '../../../generated/prisma/enums.js';
 import { prisma } from '../../lib/prisma.js';
 import { IRequestUser } from '../../interfaces/requestUser.interface.js';
 import { User } from '../../../generated/prisma/client.js';
+import { Prisma } from '@prisma/client/extension.js';
 
 const registration = async (payload: IRegistrationPayload) => {
   const { name, email, password, role } = payload;
@@ -47,7 +48,7 @@ const registration = async (payload: IRegistrationPayload) => {
     );
   }
   try {
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       if (data.user.role === Role.Learner) {
         const learner = await tx.learner.create({
           data: {
@@ -135,7 +136,7 @@ const updateRole = async (role: Role, user: User) => {
       },
     });
   } else if (role === Role.Instructor) {
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.user.update({
         where: {
           id: user.id,

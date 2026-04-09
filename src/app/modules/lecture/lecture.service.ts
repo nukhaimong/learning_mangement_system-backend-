@@ -6,8 +6,9 @@ import {
   ICreateLecturePayload,
   IInsertLecturePayload,
   IUpdateLecturePayload,
-} from './lecture.interface';
-import { deleteFileFromCloudinary } from '../../../config/cloudinary.config';
+} from './lecture.interface.js';
+import { deleteFileFromCloudinary } from '../../../config/cloudinary.config.js';
+import { Prisma } from '@prisma/client/extension.js';
 
 const createLecture = async (
   user: IRequestUser,
@@ -43,7 +44,7 @@ const createLecture = async (
     );
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const lastLecture = await tx.lecture.findFirst({
       where: { module_id: payload.module_id },
       orderBy: {
@@ -106,7 +107,7 @@ const insertLecture = async (
     );
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const nextLecture = await tx.lecture.findFirst({
       where: {
         module_id: lectureExist.module_id,
@@ -173,7 +174,7 @@ const updateLecture = async (
       'You can only update your course lecture',
     );
   }
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const updatedLecture = await tx.lecture.update({
       where: { id: lecture_id },
       data: payload,
@@ -218,7 +219,7 @@ const deleteLecture = async (user: IRequestUser, lecture_id: string) => {
     );
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const deletedLecture = await tx.lecture.delete({
       where: { id: lecture_id },
     });

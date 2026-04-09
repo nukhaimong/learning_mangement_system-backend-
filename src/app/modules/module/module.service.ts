@@ -6,6 +6,7 @@ import {
   IInsertModulePayload,
 } from './module.inteface.js';
 import { IRequestUser } from '../../interfaces/requestUser.interface.js';
+import { Prisma } from '@prisma/client/extension.js';
 
 const createModule = async (
   user: IRequestUser,
@@ -37,7 +38,7 @@ const createModule = async (
     );
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const lastModule = await tx.module.findFirst({
       where: {
         course_id: payload.course_id,
@@ -72,7 +73,7 @@ const insertModule = async (
   payload: IInsertModulePayload,
   module_id: string,
 ) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const moduleExist = await tx.module.findUnique({
       where: { id: module_id },
     });

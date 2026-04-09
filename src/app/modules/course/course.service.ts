@@ -14,6 +14,7 @@ import {
   courseSearchableFields,
 } from './course.constant.js';
 import { IQueryParams } from '../../interfaces/query.interface.js';
+import { Prisma as PrismaEx } from '@prisma/client/extension';
 
 const createCourse = async (
   user: IRequestUser,
@@ -220,7 +221,7 @@ const updateCourse = async (
     throw new AppError(status.UNAUTHORIZED, 'You can update only your courses');
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: PrismaEx.TransactionClient) => {
     const updatedCourse = await tx.course.update({
       where: {
         id: course_id,
