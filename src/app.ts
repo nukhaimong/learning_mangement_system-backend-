@@ -11,6 +11,7 @@ import { envVars } from './config/env.js';
 import { PaymentController } from './app/modules/payment/payment.controller.js';
 
 const app: Application = express();
+app.set('trust proxy', 1);
 
 app.post(
   '/webhook',
