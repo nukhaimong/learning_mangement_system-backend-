@@ -115,7 +115,7 @@ export const auth = betterAuth({
     }),
   ],
   advanced: {
-    useSecureCookies: false,
+    useSecureCookies: true,
     cookies: {
       state: {
         attributes: {
