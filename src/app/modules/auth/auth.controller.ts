@@ -25,7 +25,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
   const result = await AuthService.login(payload);
 
-  tokenUtils.setBetterAuthSessionToken(res, result.token);
+  //tokenUtils.setBetterAuthSessionToken(res, result.token);
 
   sendResponse(res, {
     success: true,
@@ -102,7 +102,7 @@ const verifyEmail = catchAsync(async (req: Request, res: Response) => {
   const { email, otp } = req.body;
   const result = await AuthService.verifyEmail(email, otp);
 
-  tokenUtils.setBetterAuthSessionToken(res, result.token as string);
+  //tokenUtils.setBetterAuthSessionToken(res, result.token as string);
 
   sendResponse(res, {
     success: true,

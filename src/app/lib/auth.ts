@@ -114,37 +114,17 @@ export const auth = betterAuth({
       otpLength: 6,
     }),
   ],
-  // advanced: {
-  //   useSecureCookies: true,
-  //   cookies: {
-  //     state: {
-  //       attributes: {
-  //         sameSite: 'none',
-  //         secure: true,
-  //         httpOnly: true,
-  //         path: '/',
-  //       },
-  //     },
-  //     sessionToken: {
-  //       attributes: {
-  //         sameSite: 'none',
-  //         secure: true,
-  //         httpOnly: true,
-  //         path: '/',
-  //       },
-  //     },
-  //   },
-  // },
   advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-      domain: 'https://learning-mangement-system-backend.onrender.com/', // root domain of ur domain
-    },
-    defaultCookieAttributes: {
-      sameSite: 'none',
-      secure: true,
-      httpOnly: true,
-      partitioned: true,
+    useSecureCookies: true,
+    cookies: {
+      sessionToken: {
+        attributes: {
+          sameSite: 'none',
+          secure: true,
+          httpOnly: true,
+          path: '/',
+        },
+      },
     },
   },
 });
