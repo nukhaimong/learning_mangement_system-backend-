@@ -8,11 +8,10 @@ import { prisma } from '../lib/prisma.js';
 export const checkAuth = (...authRoles: Role[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const sessionToken = await cookieUtils.getCookie(
-      //   req,
-      //   'better-auth.session_token',
-      // );
-      const sessionToken = await req.cookies.session_token;
+      const sessionToken = await cookieUtils.getCookie(
+        req,
+        'better-auth.session_token',
+      );
       console.log('sessionToken : ', sessionToken);
       if (!sessionToken) {
         throw new AppError(
