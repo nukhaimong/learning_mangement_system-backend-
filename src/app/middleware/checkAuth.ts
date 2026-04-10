@@ -8,11 +8,21 @@ import { prisma } from '../lib/prisma.js';
 export const checkAuth = (...authRoles: Role[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const sessionToken = await cookieUtils.getCookie(
-        req,
-        'better-auth.session_token',
-      );
-      console.log('sessionToken : ', sessionToken);
+      // const sessionToken = await cookieUtils.getCookie(
+      //   req,
+      //   'better-auth.session_token',
+      // );
+      // console.log('sessionToken : ', sessionToken);
+      // 1. Get token from Authorization Header
+      const authHeader = req.headers.authorization;
+      let sessionToken;
+
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        sessionToken = authHeader.split(' ')[1];
+      }
+
+      console.log('sessionToken from Header: ', sessionToken);
+
       if (!sessionToken) {
         throw new AppError(
           status.UNAUTHORIZED,

@@ -28,7 +28,7 @@ app.use(
     origin: envVars.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Cookie'],
+    allowedHeaders: ['Content-Type', 'Cookie', 'Authorization'],
     exposedHeaders: ['set-cookie'],
   }),
 );
