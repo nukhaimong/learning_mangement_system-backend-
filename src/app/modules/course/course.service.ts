@@ -76,6 +76,22 @@ const getCourses = async (query: IQueryParams) => {
 
   return result;
 };
+const getFreeCourses = async () => {
+  return await prisma.course.findMany({
+    where: {
+      isFree: true,
+    },
+    include: {
+      category: true,
+      instructor: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+};
 
 const getCourseById = async (course_id: string) => {
   return prisma.course.findUnique({
@@ -285,4 +301,5 @@ export const CourseService = {
   deleteCourse,
   getCourseByCategoryId,
   getCourseByInstructoId,
+  getFreeCourses,
 };

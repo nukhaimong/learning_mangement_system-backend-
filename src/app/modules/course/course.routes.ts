@@ -13,6 +13,7 @@ import { Role } from '../../../generated/prisma/enums.js';
 const router = Router();
 
 router.get('/', CourseController.getCourses);
+router.get('/free-courses', CourseController.getFreeCourses);
 router.get(
   '/instructor',
   checkAuth(Role.Instructor),

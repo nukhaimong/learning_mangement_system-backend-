@@ -108,6 +108,7 @@ const verifyEmail = catchAsync(async (req: Request, res: Response) => {
     success: true,
     httpStatusCode: status.OK,
     message: 'Email Verified Successfully',
+    data: result,
   });
 });
 
