@@ -36,7 +36,7 @@ const getFreeCourses = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,
-    message: 'Courses retrived successfully',
+    message: 'Free Courses retrived successfully',
     data: result.data,
     meta: result.meta,
   });
