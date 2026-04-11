@@ -76,21 +76,49 @@ const getCourses = async (query: IQueryParams) => {
 
   return result;
 };
-const getFreeCourses = async () => {
-  return await prisma.course.findMany({
-    where: {
+const getFreeCourses = async (query: IQueryParams) => {
+  // return await prisma.course.findMany({
+  //   include: {
+  //     category: true,
+  //     instructor: {
+  //       select: {
+  //         id: true,
+  //         name: true,
+  //       },
+  //     },
+  //   },
+  // });
+  const queryBuilder = new QueryBuilder<
+    Course,
+    Prisma.CourseWhereInput,
+    Prisma.CourseInclude
+  >(prisma.course, query, {
+    searchableFields: courseSearchableFields,
+    filterableFields: courseFilterableFields,
+  });
+  const result = await queryBuilder
+    .where({
       isFree: true,
-    },
-    include: {
-      category: true,
+    })
+    .search()
+    .filter()
+    .include({
       instructor: {
         select: {
           id: true,
           name: true,
         },
       },
-    },
-  });
+      category: {
+        select: { id: true, title: true },
+      },
+    })
+    .paginate()
+    .sort()
+    .fields()
+    .execute();
+
+  return result;
 };
 
 const getCourseById = async (course_id: string) => {

@@ -31,12 +31,14 @@ const getCourses = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getFreeCourses = catchAsync(async (req: Request, res: Response) => {
-  const result = await CourseService.getFreeCourses();
+  const query = req.query as IQueryParams;
+  const result = await CourseService.getFreeCourses(query);
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,
-    message: 'Free courses retrived successfully',
-    data: result,
+    message: 'Courses retrived successfully',
+    data: result.data,
+    meta: result.meta,
   });
 });
 
