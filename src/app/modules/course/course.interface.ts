@@ -20,5 +20,6 @@ export interface ICourseUpdatePayload {
   isFree?: boolean;
   level?: Level;
   isPublished?: boolean;
+  publishedAt?: Date;
   category_id?: string;
 }

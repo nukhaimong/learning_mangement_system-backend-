@@ -265,12 +265,20 @@ const updateCourse = async (
     throw new AppError(status.UNAUTHORIZED, 'You can update only your courses');
   }
 
+  const updateData: ICourseUpdatePayload = {
+    ...payload,
+  };
+
+  if (payload.isPublished) {
+    updateData.publishedAt = new Date();
+  }
+
   return await prisma.$transaction(async (tx: PrismaEx.TransactionClient) => {
     const updatedCourse = await tx.course.update({
       where: {
         id: course_id,
       },
-      data: payload,
+      data: updateData,
     });
 
     if (thumbnail) {

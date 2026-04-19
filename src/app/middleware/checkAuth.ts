@@ -21,8 +21,6 @@ export const checkAuth = (...authRoles: Role[]) => {
         sessionToken = authHeader.split(' ')[1];
       }
 
-      console.log('sessionToken from Header: ', sessionToken);
-
       if (!sessionToken) {
         throw new AppError(
           status.UNAUTHORIZED,
